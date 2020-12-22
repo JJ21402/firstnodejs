@@ -3,10 +3,10 @@ var router = express.Router();
 
 
 router.get('/',function(req, res, next){
-    res.render('product');
+    res.render('blog');
 })
 router.get('/add',function(req, res, next){
-    res.send('Add product');
+    res.render('addblog');
 })
 
 module.exports = router;
