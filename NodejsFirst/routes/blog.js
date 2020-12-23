@@ -2,6 +2,9 @@ var express = require("express");
 var router = express.Router();
 // ใช้ express-validator ในการตรวจสอบค่าที่จะนำเข้าสู่ db
 const { body, validationResult } = require("express-validator");
+// ใช้ monk ติดต่อฐานข้อมูล
+const url = 'localhost:27017/BlogDB';
+const db = require('monk')(url);
 
 router.get("/", function (req, res, next) {
   res.render("blog");
@@ -22,7 +25,19 @@ router.post(
         var errors = result.errors;
         res.render('addblog',{errors:errors})
     }else{
-
+        var ct = db.get('blogs');
+        ct.insert({
+            name:req.body.name,
+            description:req.body.descript,
+            author:req.body.author
+        },function(err,blog){
+            if(err){
+                res.send(err);
+            }else{
+                req.flash("success", "Blog recorded");
+                res.redirect('/blog/add');
+            }
+        })
     }
   }
 );
