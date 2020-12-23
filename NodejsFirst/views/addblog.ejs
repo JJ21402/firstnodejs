@@ -11,8 +11,9 @@
     <%- include layout %>
     <div class="container">
         <h2 style="text-align: center;">Write blogs</h2>
+                <%- messages() %>
         <% if(locals.errors) { %>
-        <ul>
+        <ul class="alert alert-danger">
             <% Object.values(errors).forEach(function(error){ %>
                 <li><%= error.msg %></li>
             <% })%>
@@ -43,6 +44,12 @@
             .catch( error => {
                 console.error( error );
             } );
+
+        $(function(){
+            $('#messages').addClass('alert alert-success');
+        });
+
+        
     </script>
 </body>
 </html>
